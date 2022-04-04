@@ -19,7 +19,7 @@ express()
 	.get('/', async(req, res) => {
 		try {
 			
-		const client = await.connect();
+		const client = await pool.connect();
 		client.release();
 		res.send("Works");
 		
