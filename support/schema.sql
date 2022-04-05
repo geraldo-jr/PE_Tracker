@@ -21,11 +21,14 @@ CREATE TABLE observations (
   id SERIAL PRIMARY KEY,
   user_id INT NOT NULL,
   student_id INT NOT NULL,
-  task_id INT NOT NULL,
-  duration TEXT NOT NULL
+  tasks_id INT NOT NULL,
+  duration INTERVAL NOT NULL
 );
 
 CREATE TABLE tasks (
   id SERIAL PRIMARY KEY, 
   name TEXT NOT NULL
 );
+
+INSERT INTO tasks (name) VALUES
+  ('Planned Pres.');
