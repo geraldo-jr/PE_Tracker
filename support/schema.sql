@@ -34,13 +34,4 @@ INSERT INTO tasks (name) VALUES
   ('Planned Pres.');
   
 INSERT INTO tasks (name) VALUES
-  ('Response Pres.'), (name) VALUES
-  ('Monitoring'), (name) VALUES
-  ('Perform. Feedback'), (name) VALUES
-  ('Motiv. Feedback'), (name) VALUES
-  ('Beg/End Class'), (name) VALUES
-  ('Response Pres.'), (name) VALUES
-  ('Equip. Mgt.'), (name) VALUES
-  ('Organization'), (name) VALUES
-  ('Behavior Mgt.'), (name) VALUES
-  ('Other Tasks');
+  ('Response Pres.'), ('Monitoring'), ('Perform. Feedback'), ('Motiv. Feedback'), ('Beg/End Class'), ('Response Pres.'), ('Equip. Mgt.'), ('Organization'), ('Behavior Mgt.'), ('Other Tasks');

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PE Tracker</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="..\CSS\style.css">
 </head>
 <body>
   <h1>PE Tracker</h1>
@@ -13,17 +14,26 @@
     <h2>Observer Geraldo</h2>
     <p>Teacher-Student Instructor: <span id="instructors-name"></span></p>
     <p>School: <span id="school-name"></span></p>
-    <p>Date: <span id="date"></span></p>
+    <p>Date: <span id="date"></span><input type="date" name="input-date" id="input-date" value="<%= new Date()%>"></p>
   </header>
 
-  <div class="tasks-table">
+  <main>
 
-    <p><span id="time-header">Times*</span> <span id="tasks-quantity">#</span></p>
-    <% tasks.forEach(function(r) { %>
-      <div id="r.id-parameters"><span id="<%= r.id %>-title"><%= r.name %></span><span id="<%= r.id %>-control"><i class="fa fa-play"></i></span><span id="<%= r.id %>-time">0</span><span id="<%= r.id %>-quantity">0</span></span></div>
-      <!-- <button id='<%= taskId %>' onClick='javascript:logTask(<%= taskId %>);'><%= r.name %></button> -->
-    <% }); %>
-  </div>
+    <div class="tasks-table">
+      
+      <p><span id="time-header">Times*</span> <span id="tasks-quantity">#</span></p>
+      <% tasks.forEach(function(r) { %>
+        <div id="r.id-parameters"><span class="task-title" id="<%= r.id %>-title"><%= r.name %></span><span id="<%= r.id %>-control"><i class="fa fa-play"></i></span><span id="<%= r.id %>-time">0</span><span id="<%= r.id %>-quantity">0</span></span></div>
+        <!-- <button id='<%= r.id %>' onClick='javascript:logTask(<%= r.id %>);'><%= r.name %></button> -->
+        <% }); %>
+        
+      </div>
+      
+  
+    <button id="btn-reset">Reset</button><br>
+    <button id="btn-save">Save Data</button><button id="btn-report">Generate Report</button>
+  </main>
+
   <script>
     let currentTaskId = null;
     const logTask = async function(id) {
