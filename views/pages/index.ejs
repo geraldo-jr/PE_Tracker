@@ -7,6 +7,30 @@
   <title>PE Tracker</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="..\CSS\style.css">
+  <style>
+    .main-content {
+      width: 400px;
+      border: 1px solid red;
+    }
+    .task-title {
+      margin-right: 2em;
+      font-size: large;
+      text-align: justify;
+    }
+    .task-control {
+      margin: auto 7px;
+    }
+    .task-time, .task-quantity {
+      background-color: rgb(211, 210, 210);
+      margin: auto .3rem;
+    }
+    .task-time {
+      
+    }
+    .task-quantity {
+      padding: 1px 5px;
+    }
+  </style>
 </head>
 <body>
   <h1>PE Tracker</h1>
@@ -17,19 +41,16 @@
     <p>Date: <span id="date"></span><input type="date" name="input-date" id="input-date" value="<%= new Date()%>"></p>
   </header>
 
-  <main>
+  <main class="main-content">
 
     <div class="tasks-table">
-      
       <p><span id="time-header">Times*</span> <span id="tasks-quantity">#</span></p>
       <% tasks.forEach(function(r) { %>
-        <div id="r.id-parameters"><span class="task-title" id="<%= r.id %>-title"><%= r.name %></span><span id="<%= r.id %>-control"><i class="fa fa-play"></i></span><span id="<%= r.id %>-time">0</span><span id="<%= r.id %>-quantity">0</span></span></div>
+        <div id="r.id-parameters"><span class="task-title" id="<%= r.id %>-title"><%= r.name %></span><span class="task-control" id="<%= r.id %>-control"><i class="fa fa-play"></i></span><input class="task-time" id="<%= r.id %>-time" value="0" size="2"></input><span class="task-quantity" id="<%= r.id %>-quantity">0</span></span></div>
         <!-- <button id='<%= r.id %>' onClick='javascript:logTask(<%= r.id %>);'><%= r.name %></button> -->
-        <% }); %>
-        
-      </div>
+      <% }); %>
+    </div>
       
-  
     <button id="btn-reset">Reset</button><br>
     <button id="btn-save">Save Data</button><button id="btn-report">Generate Report</button>
   </main>
