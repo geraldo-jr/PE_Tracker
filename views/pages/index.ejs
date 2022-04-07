@@ -5,14 +5,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PE Tracker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
   <h1>PE Tracker</h1>
-  <% tasks.forEach(function(r) { %>
-  <!-- <%= taskId = r.id; %> -->
-    <button id='<%= r.id %>'
-      onClick='javascript:logTask(<%= r.id %>);'><%= r.name %></button>
-  <% }); %>
+  <header class="header-observer">
+    <h2>Observer Geraldo</h2>
+    <p>Teacher-Student Instructor: <span id="instructors-name"></span></p>
+    <p>School: <span id="school-name"></span></p>
+    <p>Date: <span id="date"></span></p>
+  </header>
+
+  <div class="tasks-table">
+
+    <p><span id="time-header">Times*</span> <span id="tasks-quantity">#</span></p>
+    <% tasks.forEach(function(r) { %>
+      <div id="r.id-parameters"><span id="<%= r.id %>-title"><%= r.name %></span><span id="<%= r.id %>-control"><i class="fa fa-play"></i></span><span id="<%= r.id %>-time">0</span><span id="<%= r.id %>-quantity">0</span></span></div>
+      <!-- <button id='<%= taskId %>' onClick='javascript:logTask(<%= taskId %>);'><%= r.name %></button> -->
+    <% }); %>
+  </div>
   <script>
     let currentTaskId = null;
     const logTask = async function(id) {
