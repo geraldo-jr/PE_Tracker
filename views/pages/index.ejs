@@ -8,9 +8,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="..\CSS\style.css">
   <style>
-    .main-content {
+    body {
       width: 19.5rem;
-      border: 1px solid red;
+    }
+    .header-observer {
+      text-align: center;
+    }
+    .main-content {
+      margin: auto 0;
+      width: 18.5rem;
+      /* border: 1px solid red; */
+    }
+    .headers-tasks {
+      width: 18.5rem;
+      position: relative;
+      text-align: right;
+    }
+    #time-header, #quantity-header, .task-time, .task-quantity {
+      margin: auto .3rem;
+      padding: 1px 5px;
     }
     .task-title {
       margin-right: 2em;
@@ -19,27 +35,34 @@
     }
     .task-control {
       margin: auto 7px;
+      float: right;
     }
     .task-time, .task-quantity {
       background-color: rgb(211, 210, 210);
-      margin: auto .3rem;
-      padding: 1px 5px;
     }
     .task-time {
       border: none;
       text-align: right;
       font-size: .96em;
+      float: right;
     }
     .task-quantity {
       float: right;
       border: none;
       padding: 1px 5px;
     }
+    #buttons-section {
+      text-align: center;
+      margin: .7rem;
+    }
+    #buttons-section button {
+      margin: .2rem;
+    }
   </style>
 </head>
 <body>
-  <h1>PE Tracker</h1>
   <header class="header-observer">
+    <h1>PE Tracker</h1>
     <h2>Observer Geraldo</h2>
     <p>Teacher-Student Instructor: <span id="instructors-name"></span></p>
     <p>School: <span id="school-name"></span></p>
@@ -47,19 +70,21 @@
   </header>
 
   <main class="main-content">
-
+    
     <div class="tasks-table">
-      <p><span id="time-header">Times*</span> <span id="tasks-quantity">#</span></p>
+      <p class="headers-tasks"><span id="time-header">Time*</span><span id="quantity-header">#</span></p>
       <% tasks.forEach(function(r) { %>
-        <div id="r.id-parameters"><span class="task-title" id="<%= r.id %>-title"><%= r.name %></span><span class="task-control" id="<%= r.id %>-control"><i class="fa fa-play"></i></span><input class="task-time" id="<%= r.id %>-time" value="0" size="2"></input><span class="task-quantity" id="<%= r.id %>-quantity">0</span></span></div>
+        <div id="r.id-parameters"><span class="task-title" id="<%= r.id %>-title"><%= r.name %></span><span class="task-quantity" id="<%= r.id %>-quantity">0</span><input class="task-time" id="<%= r.id %>-time" value="0" size="2"></input><span class="task-control" id="<%= r.id %>-control"><i class="fa fa-play"></i></span></div>
         <!-- <button id='<%= r.id %>' onClick='javascript:logTask(<%= r.id %>);'><%= r.name %></button> -->
       <% }); %>
     </div>
-      
-    <button id="btn-reset">Reset</button><br>
-    <button id="btn-save">Save Data</button><button id="btn-report">Generate Report</button>
+    <div id="buttons-section">
+      <button id="btn-reset">Reset</button><br>
+      <button id="btn-save">Save Data</button><button id="btn-report">Generate Report</button>
+    </div>
   </main>
 
+  <p><i>*Time the instructor spent for each task.</i></p>
   <script>
     let currentTaskId = null;
     const logTask = async function(id) {
