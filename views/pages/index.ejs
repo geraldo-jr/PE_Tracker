@@ -8,27 +8,40 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="..\CSS\style.css">
   <style>
+    html {
+      width: 0;
+      height: 0;
+    }
     body {
       width: 19.5rem;
+      margin: 0 auto;
+      border: 1px solid red;
     }
     .header-observer {
       text-align: center;
     }
     .main-content {
       margin: auto 0;
-      width: 18.5rem;
-      /* border: 1px solid red; */
+      width: 100%;
     }
     .headers-tasks {
-      width: 18.5rem;
       position: relative;
       text-align: right;
     }
-    #time-header, #quantity-header, .task-time, .task-quantity {
+    #instructors-name, #school-name {
+
+    }
+    #time-header, #quantity-header, .task-name, .task-quantity {
       margin: auto .3rem;
       padding: 1px 5px;
     }
-    .task-title {
+    #time-header{
+      margin-right: 0;
+    }
+    #quantity-header {
+      margin-left: 0;
+    }
+    .task-name {
       margin-right: 2em;
       font-size: large;
       text-align: justify;
@@ -37,18 +50,29 @@
       margin: auto 7px;
       float: right;
     }
-    .task-time, .task-quantity {
+    .task-time, .task-quantity, #instructors-name, #school-name {
       background-color: rgb(211, 210, 210);
     }
-    .task-time {
+    #instructors-name, #school-name {
+      padding: .2em;
+    }
+    .task-time, .task-quantity {
+      float: right;
       border: none;
+    }
+    .task-time {
       text-align: right;
       font-size: .96em;
-      float: right;
+      width: 3em;
+    }
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
     }
     .task-quantity {
-      float: right;
-      border: none;
       padding: 1px 5px;
     }
     #buttons-section {
@@ -58,34 +82,122 @@
     #buttons-section button {
       margin: .2rem;
     }
+
+    @media only screen and (max-width: 400px) {
+    }
   </style>
 </head>
 <body>
-  <header class="header-observer">
-    <h1>PE Tracker</h1>
-    <h2>Observer Geraldo</h2>
-    <p>Teacher-Student Instructor: <span id="instructors-name"></span></p>
-    <p>School: <span id="school-name"></span></p>
-    <p>Date: <span id="date"></span><input type="date" name="input-date" id="input-date" value="<%= new Date()%>"></p>
-  </header>
+  <div class="page-content">
 
-  <main class="main-content">
-    
-    <div class="tasks-table">
-      <p class="headers-tasks"><span id="time-header">Time*</span><span id="quantity-header">#</span></p>
-      <% tasks.forEach(function(r) { %>
-        <div id="r.id-parameters"><span class="task-title" id="<%= r.id %>-title"><%= r.name %></span><span class="task-quantity" id="<%= r.id %>-quantity">0</span><input class="task-time" id="<%= r.id %>-time" value="0" size="2"></input><span class="task-control" id="<%= r.id %>-control"><i class="fa fa-play"></i></span></div>
-        <!-- <button id='<%= r.id %>' onClick='javascript:logTask(<%= r.id %>);'><%= r.name %></button> -->
-      <% }); %>
-    </div>
-    <div id="buttons-section">
-      <button id="btn-reset">Reset</button><br>
-      <button id="btn-save">Save Data</button><button id="btn-report">Generate Report</button>
-    </div>
-  </main>
+    <header class="header-observer">
+      <h1>PE Tracker</h1>
+      <h2>Observer Geraldo</h2>
+      <p>Teacher-Student Instructor: <span id="instructors-name"></span></p>
+      <p>School: <span id="school-name"></span></p>
+      <p>Date: <span id="date"></span><input type="date" name="input-date" id="input-date" value="<%= new Date()%>"></p>
+    </header>
 
-  <p><i>*Time the instructor spent for each task.</i></p>
+    <main class="main-content">
+      
+      <div class="tasks-table">
+        <p class="headers-tasks"><span id="time-header">Time*</span><span id="quantity-header">#</span></p>
+        <% tasks.forEach(function(r) { %>
+          <div id="r.id-parameters">
+            <span class="task-name" id="<%= r.id %>-name"><%= r.name %></span><span class="task-quantity" id="<%= r.id %>-quantity">0</span><input type="number" class="task-time" id="<%= r.id %>-time" value="0" size="11"></input><span class="task-control" id="<%= r.id %>-control" onclick="playerFunction(this, <%= r.id %>)"><i class="fa fa-play"></i></span>
+          </div>
+          <!-- <button id='<%= r.id %>' onClick='javascript:logTask(<%= r.id %>);'><%= r.name %></button> -->
+        <% }); %>
+      </div>
+      <div id="buttons-section">
+        <button id="btn-reset" onclick="resetTasksData()">Reset</button><br>
+        <button id="btn-save">Save Data</button><button id="btn-report">Generate Report</button>
+      </div>
+    </main>
+
+    <p><i>*Time in seconds the instructor spent for each task.</i></p>
+  </div>
+
   <script>
+
+    // Generates and pick a random Student Instructor and School
+    function randomInstructorsAndSchoolsGenerator() {
+      let listOfInstructors = ["Adam Neely", "Salma Brandon", "Andorson Bardot", "Michael Douglas"];
+      let listOfSchools = ["Memorial High School", "Main Street School", "Regis High School", "Parkside School", "Necedah Area School District"];
+      let randomInstructorSelected = listOfInstructors[Math.floor(Math.random()*listOfInstructors.length)];
+      let randomSchoolSelected = listOfSchools[Math.floor(Math.random()*listOfSchools.length)];
+      
+      document.querySelector("#instructors-name").innerText = randomInstructorSelected;
+      document.querySelector("#school-name").innerText = randomSchoolSelected;
+    }
+    document.onload = randomInstructorsAndSchoolsGenerator();
+
+    // Play/pause feature
+    let nIntervId;
+    let lastTaskPlayed;
+    function playerFunction(e, taskId) {
+      let player = e.querySelector('i');
+
+      // Changes the play pause icon
+      player.classList.toggle("fa-pause");
+
+      // Triggers the timer for task and adds a quantity
+      if (player.className === "fa fa-play fa-pause") {
+        clearInterval(nIntervId);
+        if (lastTaskPlayed !== undefined) {
+          lastTaskPlayed.firstChild.className = "fa fa-play";
+        }
+
+        // Adding quantity of times that tasks was performed
+        let taskQuantityElement = document.getElementById(taskId + "-quantity");
+        lastTaskPlayed = document.getElementById(taskId + "-control");
+        let taskQuantityValue = parseInt(taskQuantityElement.innerText);
+        taskQuantityValue = taskQuantityValue + 1;
+        taskQuantityElement.innerText = taskQuantityValue;
+
+        startTimer(taskId);
+
+      } else {
+        // Pause current timer running
+        clearInterval(nIntervId);
+      }
+
+      // Starts timer counter for last task played
+      function startTimer(taskId) {
+        nIntervId = setInterval(function(){
+          let taskTimeElement = document.getElementById(taskId + "-time");
+          console.log(nIntervId);
+
+          // Make sure value of time is always 0;
+          if (taskTimeElement.value === "") {
+            taskTimeElement.value = 0;
+          }
+          let taskTimeValue = parseInt(taskTimeElement.value);
+          taskTimeValue = taskTimeValue + 1;
+          taskTimeElement.value = taskTimeValue;
+        }, 1000);
+      }
+    }
+
+    function resetTasksData() {
+      clearInterval(nIntervId);
+      let timeInputs = document.querySelectorAll(".task-time");
+      timeInputs.forEach(tag => {
+        tag.value = 0;
+      })
+
+      let quantityTags = document.querySelectorAll(".task-quantity");
+      quantityTags.forEach(tag => {
+        tag.innerText = "0";
+      })
+
+      let controlTags = document.querySelectorAll(".task-control");
+      controlTags.forEach(player => {
+        player.firstChild.className = "fa fa-play";
+      });
+    }
+
+    // Backend code with db and node.js
     let currentTaskId = null;
     const logTask = async function(id) {
       const response = await fetch('/log', {
@@ -98,7 +210,7 @@
           user_id: -1,
           students_id: -1,
           tasks_id: id,
-          duration: "'+00:00:01'"
+          duration: ""
         })
       });
       const result = await response.text();
