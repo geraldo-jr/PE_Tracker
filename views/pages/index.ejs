@@ -168,7 +168,6 @@
       function startTimer(taskId) {
         nIntervId = setInterval(function(){
           let taskTimeElement = document.getElementById(taskId + "-time");
-          console.log(nIntervId);
 
           // Make sure value of time is always 0;
           if (taskTimeElement.value === "") {
@@ -212,8 +211,6 @@
           taskDuration = getTaskTime.value;
         }
         taskId = parseInt(selectTaskId.innerText);
-        console.log(taskId + " " + taskDuration);
-
         
         logTask(taskId, taskDuration);
       });
