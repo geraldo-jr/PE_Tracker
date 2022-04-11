@@ -173,6 +173,7 @@
           if (taskTimeElement.value === "") {
             taskTimeElement.value = 0;
           }
+          
           let taskTimeValue = parseInt(taskTimeElement.value);
           taskTimeValue = taskTimeValue + 1;
           taskTimeElement.value = taskTimeValue;
@@ -180,6 +181,7 @@
       }
     }
 
+    // Reset values on UI without submiting it
     function resetTasksData() {
       clearInterval(nIntervId);
       let timeInputs = document.querySelectorAll(".task-time");
@@ -198,22 +200,28 @@
       });
     }
 
+    // Seves data on db
     function saveData() {
-      let allTasksTags = document.querySelectorAll('.all-tasks')
-      
-      // Getting current values for each tag
-      allTasksTags.forEach(taskTag => {
-        let selectTaskId = taskTag.querySelector(".task-id");
-        let getTaskTime = taskTag.querySelector(".task-time");
-        if(getTaskTime.value < 10 ) {
-          taskDuration = "0" + getTaskTime.value;
-        } else {
-          taskDuration = getTaskTime.value;
-        }
-        taskId = parseInt(selectTaskId.innerText);
+      let confirmDataSubmission = confirm("Are you sure you save and to submit the data?")
+
+      if (confirmDataSubmission) {
+
+        let allTasksTags = document.querySelectorAll('.all-tasks')
         
-        logTask(taskId, taskDuration);
-      });
+        // Getting current values for each tag
+        allTasksTags.forEach(taskTag => {
+          let selectTaskId = taskTag.querySelector(".task-id");
+          let getTaskTime = taskTag.querySelector(".task-time");
+          if(getTaskTime.value < 10 ) {
+            taskDuration = "0" + getTaskTime.value;
+          } else {
+            taskDuration = getTaskTime.value;
+          }
+          taskId = parseInt(selectTaskId.innerText);
+          
+          logTask(taskId, taskDuration);
+        });
+      }
     }
 
     document.getElementByClassName

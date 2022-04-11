@@ -25,6 +25,7 @@ express()
 				`SELECT * FROM tasks ORDER BY id ASC`);
 			const students = await client.query(
 				`SELECT * FROM students ORDER BY id ASC`);
+				
 			const randomNumber = parseInt(Math.floor(Math.random()*students.rows.length));
 			
 			const schools = await client.query(

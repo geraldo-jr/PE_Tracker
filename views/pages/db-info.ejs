@@ -20,7 +20,7 @@
       <!-- <% let taskID = parseInt(r.tasks_id) %>
       <% console.log(tasks[taskID]) %> -->
       <p>Records for student <b><%= students[r.student_id].name %></b>:</p>
-      <li>Record <%= r.id %> of student <%= students[r.student_id - 3].name %> for tasks <%= r.tasks_id %> with duration of "+<%= r.duration.minutes || "00" %>:<%= r.duration.seconds || "00" %>" Minutes</li>
+      <li>Record <%= r.id %> of student <%= students[r.student_id].name %> for tasks <%= r.tasks_id %> with duration of "+<%= r.duration.minutes || "00" %>:<%= r.duration.seconds || "00" %>" Minutes</li>
       <% count++; %>
       <% if (count === obs.length) { %>
         <hr>
