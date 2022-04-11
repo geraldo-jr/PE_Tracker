@@ -19,7 +19,7 @@
     <% obs.forEach(function(r) { %>
       <!-- <% let taskID = parseInt(r.tasks_id) %>
       <% console.log(tasks[taskID]) %> -->
-      <span>Records for student <b><%= students[r.student_id - 1].name %></b>:</span>
+      <li style="list-style: none;">Records for student <b><%= students[r.student_id - 1].name %></b>:</li>
       <li>Record <%= r.id %> of student <%= students[r.student_id - 1].name %> for tasks <%= r.tasks_id %> with duration of "+<%= r.duration.minutes || "00" %>:<%= r.duration.seconds || "00" %>" Minutes</li>
       <% count++; %>
       <% if (count === obs.length) { %>
