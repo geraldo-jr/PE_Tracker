@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const PORT = process.env.PORT || 5000;
 const { Pool } = require('pg');
-const { isNull } = require('util');
 
 const pool = new Pool({
 	connectionString: process.env.DATABASE_URL,
@@ -25,7 +24,7 @@ express()
 				`SELECT * FROM tasks ORDER BY id ASC`);
 			const students = await client.query(
 				`SELECT * FROM students ORDER BY id ASC`);
-				
+
 			const randomNumber = parseInt(Math.floor(Math.random()*students.rows.length));
 			
 			const schools = await client.query(
