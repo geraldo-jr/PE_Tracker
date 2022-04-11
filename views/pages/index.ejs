@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PE Tracker</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="..\CSS\style.css">
   <style>
     html {
       width: 0;
@@ -92,7 +91,7 @@
       <h2>Observer Geraldo</h2>
       <p>Teacher-Student Instructor: <span id="instructors-name"></span></p>
       <p>School: <span id="school-name"></span></p>
-      <p>Date: <span id="date"></span><input type="date" name="input-date" id="input-date" value="<%= new Date()%>"></p>
+      <p>Date: <span id="date"></span><input type="date" name="input-date" id="input-date" value=""></p>
     </header>
 
     <main class="main-content">
@@ -100,8 +99,8 @@
       <div class="tasks-table">
         <p class="headers-tasks"><span id="time-header">Time*</span><span id="quantity-header">#</span></p>
         <% tasks.forEach(function(r) { %>
-          <div class="all-tasks" id="r.id-parameters">
-            <span class="task-id" id="<%= r.id %>-id"><%= r.id %></span><span class="task-name" id="<%= r.id %>-name"><%= r.name %></span><span class="task-quantity" id="<%= r.id %>-quantity">0</span><input type="number" class="task-time" id="<%= r.id %>-time" value="0" size="11"></input><span class="task-control" id="<%= r.id %>-control" onclick="playerFunction(this, <%= r.id %>)"><i class="fa fa-play"></i></span>
+          <div class="all-tasks" id="<%= r.id %>-parameters">
+            <span class="task-id" id="<%= r.id %>-id"><%= r.id %></span><span class="task-name" id="<%= r.id %>-name"><%= r.name %></span><span class="task-quantity" id="<%= r.id %>-quantity">0</span><input type="number" class="task-time" id="<%= r.id %>-time" value="0"/><span class="task-control" id="<%= r.id %>-control" onclick="playerFunction(this, <%= r.id %>)"><i class="fa fa-play"></i></span>
           </div>
           <!-- <button id='<%= r.id %>' onClick='javascript:logTask(<%= r.id %>);'><%= r.name %></button> -->
         <% }); %>
