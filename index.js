@@ -20,11 +20,21 @@ express()
 	.get('/', async(req, res) => {
 		try {
 			const client = await pool.connect();
+
 			const tasks = await client.query(
 				`SELECT * FROM tasks ORDER BY id ASC`);
+			const students = await client.query(
+				`SELECT * FROM students ORDER BY id ASC`);
+			const randomNumber = parseInt(Math.floor(Math.random()*students.rows.length));
+			
+			const schools = await client.query(
+				`SELECT * FROM schools ORDER BY id ASC`);
 
 			const locals = {
-				'tasks': (tasks) ? tasks.rows : null
+				'tasks': (tasks) ? tasks.rows : null,
+				'studentName': students.rows[randomNumber].name,
+				'studentId': students.rows[randomNumber].id,
+				'studentSchool': schools.rows[students.rows[randomNumber].school].name
 			};
 			res.render('pages/index', locals);
 			client.release();
@@ -49,11 +59,19 @@ express()
 			);
 
 			const obs = await client.query(
-				`SELECT * FROM observations;`);
+				`SELECT * FROM observations ORDER BY student_id ASC`);
+
+			const students = await client.query(
+				`SELECT * FROM students`);
+			
+				const tasks = await client.query(
+				`SELECT * FROM tasks`);
 			
 			const locals = {
 				'tables': (tables) ? tables.rows : null,
-				'obs': (obs) ? obs.rows : null
+				'obs': (obs) ? obs.rows : null,
+				'students': (students) ? students.rows : null,
+				'tasks': (tasks) ? tasks.rows : null
 			};
 
 			res.render('pages/db-info', locals);

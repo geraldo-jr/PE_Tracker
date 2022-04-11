@@ -28,9 +28,6 @@
       position: relative;
       text-align: right;
     }
-    #instructors-name, #school-name {
-
-    }
     #time-header, #quantity-header, .task-name, .task-quantity {
       margin: auto .3rem;
       padding: 1px 5px;
@@ -103,15 +100,15 @@
       <div class="tasks-table">
         <p class="headers-tasks"><span id="time-header">Time*</span><span id="quantity-header">#</span></p>
         <% tasks.forEach(function(r) { %>
-          <div id="r.id-parameters">
-            <span class="task-name" id="<%= r.id %>-name"><%= r.name %></span><span class="task-quantity" id="<%= r.id %>-quantity">0</span><input type="number" class="task-time" id="<%= r.id %>-time" value="0" size="11"></input><span class="task-control" id="<%= r.id %>-control" onclick="playerFunction(this, <%= r.id %>)"><i class="fa fa-play"></i></span>
+          <div class="all-tasks" id="r.id-parameters">
+            <span class="task-id" id="<%= r.id %>-id"><%= r.id %></span><span class="task-name" id="<%= r.id %>-name"><%= r.name %></span><span class="task-quantity" id="<%= r.id %>-quantity">0</span><input type="number" class="task-time" id="<%= r.id %>-time" value="0" size="11"></input><span class="task-control" id="<%= r.id %>-control" onclick="playerFunction(this, <%= r.id %>)"><i class="fa fa-play"></i></span>
           </div>
           <!-- <button id='<%= r.id %>' onClick='javascript:logTask(<%= r.id %>);'><%= r.name %></button> -->
         <% }); %>
       </div>
       <div id="buttons-section">
         <button id="btn-reset" onclick="resetTasksData()">Reset</button><br>
-        <button id="btn-save">Save Data</button><button id="btn-report">Generate Report</button>
+        <button id="btn-save" onclick="saveData()">Save Data</button><button id="btn-report">Generate Report</button>
       </div>
     </main>
 
@@ -119,17 +116,22 @@
   </div>
 
   <script>
-
+    let studentId;
+    let taskId;
+    let taskDuration;
     // Generates and pick a random Student Instructor and School
     function randomInstructorsAndSchoolsGenerator() {
-      let listOfInstructors = ["Adam Neely", "Salma Brandon", "Andorson Bardot", "Michael Douglas"];
-      let listOfSchools = ["Memorial High School", "Main Street School", "Regis High School", "Parkside School", "Necedah Area School District"];
-      let randomInstructorSelected = listOfInstructors[Math.floor(Math.random()*listOfInstructors.length)];
-      let randomSchoolSelected = listOfSchools[Math.floor(Math.random()*listOfSchools.length)];
-      
-      document.querySelector("#instructors-name").innerText = randomInstructorSelected;
-      document.querySelector("#school-name").innerText = randomSchoolSelected;
+
+      // Fetches students info from db
+      studentId = "<%= studentId %>";
+      let studentName = "<%= studentName %>";
+      let studentSchool = "<%= studentSchool %>";
+
+      // Displaying student instructor info
+      document.querySelector("#instructors-name").innerText = studentName;
+      document.querySelector("#school-name").innerText = studentSchool;
     }
+
     document.onload = randomInstructorsAndSchoolsGenerator();
 
     // Play/pause feature
@@ -197,9 +199,30 @@
       });
     }
 
+    function saveData() {
+      let allTasksTags = document.querySelectorAll('.all-tasks')
+      
+      // Getting current values for each tag
+      allTasksTags.forEach(taskTag => {
+        let selectTaskId = taskTag.querySelector(".task-id");
+        let getTaskTime = taskTag.querySelector(".task-time");
+        if(getTaskTime.value < 10 ) {
+          taskDuration = "0" + getTaskTime.value;
+        } else {
+          taskDuration = getTaskTime.value;
+        }
+        taskId = parseInt(selectTaskId.innerText);
+        console.log(taskId + " " + taskDuration);
+
+        
+        logTask(taskId, taskDuration);
+      });
+    }
+
+    document.getElementByClassName
     // Backend code with db and node.js
     let currentTaskId = null;
-    const logTask = async function(id) {
+    const logTask = async function(taskId, taskDuration) {
       const response = await fetch('/log', {
         method: 'POST',
         headers: {
@@ -208,14 +231,14 @@
         },
         body: JSON.stringify({
           user_id: -1,
-          students_id: -1,
-          tasks_id: id,
-          duration: ""
+          students_id: studentId,
+          tasks_id: taskId,
+          duration: "'+" + taskDuration + "'"
         })
       });
       const result = await response.text();
       console.log(result);
-      currentTaskId = id;
+      currentTaskId = taskId;
     };
   </script>
 </body>
